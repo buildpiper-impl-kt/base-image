@@ -1,6 +1,13 @@
+FROM ubuntu:20.04
+
+ENV DEBIAN_FRONTEND=noninteractive
+ENV TZ=Asia/Kolkata
+ENV AIRGAP_ENV=true
+
+
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
-        # Basic essentials
+
         curl \
         wget \
         ca-certificates \
@@ -20,7 +27,8 @@ RUN apt-get update && \
         procps \
         parallel \
         software-properties-common \
-        # Networking + debugging
+        passwd \
+  
         net-tools \
         iproute2 \
         iputils-ping \
@@ -32,7 +40,7 @@ RUN apt-get update && \
         tcpdump \
         openssh-client \
         rsync \
-        # Build tools
+
         build-essential \
         make \
         cmake \
@@ -41,22 +49,23 @@ RUN apt-get update && \
         autoconf \
         automake \
         libtool \
-        # Python
+
         python3 \
         python3-pip \
         python3-dev \
         python3-venv \
         libffi-dev \
         libssl-dev \
-        # Java
+        awscli \
+
         default-jdk \
         ca-certificates-java \
-        # Compression/archiving
+
         zip \
         bzip2 \
         gzip \
         p7zip-full \
-        # Extra utilities
+
         jq \
         git \
         htop \
@@ -67,3 +76,7 @@ RUN apt-get update && \
     echo $TZ > /etc/timezone && \
     locale-gen en_US.UTF-8 && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
+
+ENV SLEEP_DURATION=5s
+
+
